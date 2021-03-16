@@ -1,0 +1,51 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url('img/background.png');
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-align: center;
+}
+
+.top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.box_border {
+  border-radius: 8px;
+  margin: 6px;
+  background-color: whitesmoke;
+  color: black;
+}
+
+.play_btn {
+  width: 80px;
+  height: 80px;
+  border: 4px solid black;
+  font-size: 34px;
+  outline: none;
+  cursor: pointer;
+}
+
+.time_box {
+  width: 120px;
+  height: 60px;
+  font-size: 32px;
+  padding: 6px;
+}
+
+.count_box {
+  width: 60px;
+  height: 60px;
+  font-size: 32px;
+  padding: 6px;
+  margin: 6px;
+  border-radius: 100%;
+  background-color: tomato;
+  color: whitesmoke;
+}
