@@ -2,15 +2,21 @@
   box-sizing: border-box;
 }
 
+html {
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
   background-image: url('img/background.png');
-  height: 100%;
   background-repeat: no-repeat;
   background-size: cover;
   text-align: center;
+  height: 100%;
 }
 
-.game__header {
+.game__header,
+.pop-up {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,19 +29,27 @@ body {
   color: black;
 }
 
-.play__btn {
+.play__btn,
+.replay__btn {
   width: 80px;
   height: 80px;
   border: 4px solid black;
   font-size: 34px;
+  transition: transform 300ms ease-in;
   outline: none;
   cursor: pointer;
+}
+
+.play__btn:hover,
+.replay__btn:hover {
+  transform: scale(1.1);
 }
 
 .time__box {
   width: 120px;
   height: 60px;
   font-size: 32px;
+  font-weight: 600;
   padding: 6px;
 }
 
@@ -43,9 +57,39 @@ body {
   width: 60px;
   height: 60px;
   font-size: 32px;
+  font-weight: 600;
   padding: 6px;
   margin: 6px;
   border-radius: 100%;
   background-color: tomato;
   color: whitesmoke;
+}
+
+.game__field {
+  width: 100%;
+  height: 40%;
+  margin-top: 200px;
+}
+
+.pop-up {
+  margin: auto;
+  width: 360px;
+  height: 180px;
+  background-color: rgba(52, 48, 48, 0.5);
+  border-radius: 8px;
+  transform: translateY(-150%);
+}
+
+.pop-up__hide {
+  display: none;
+}
+
+.replay__btn {
+  margin-top: 18px;
+}
+.message__box {
+  color: whitesmoke;
+  font-size: 32px;
+  font-weight: 600;
+  padding: 8px;
 }
