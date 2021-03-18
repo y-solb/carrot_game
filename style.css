@@ -29,7 +29,7 @@ body {
   color: black;
 }
 
-.play__btn,
+.game__btn,
 .replay__btn {
   width: 80px;
   height: 80px;
@@ -40,7 +40,7 @@ body {
   cursor: pointer;
 }
 
-.play__btn:hover,
+.game__btn:hover,
 .replay__btn:hover {
   transform: scale(1.1);
 }
@@ -51,9 +51,10 @@ body {
   font-size: 32px;
   font-weight: 600;
   padding: 6px;
+  visibility: hidden;
 }
 
-.count__box {
+.score__box {
   width: 60px;
   height: 60px;
   font-size: 32px;
@@ -63,6 +64,7 @@ body {
   border-radius: 100%;
   background-color: tomato;
   color: whitesmoke;
+  visibility: hidden;
 }
 
 .game__field {
@@ -88,6 +90,7 @@ body {
 .replay__btn {
   margin-top: 18px;
 }
+
 .message__box {
   color: whitesmoke;
   font-size: 32px;
