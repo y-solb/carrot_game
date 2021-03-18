@@ -52,6 +52,8 @@ body {
   font-weight: 600;
   padding: 6px;
   visibility: hidden;
+  user-select: none;
+  cursor: auto;
 }
 
 .score__box {
@@ -65,6 +67,8 @@ body {
   background-color: tomato;
   color: whitesmoke;
   visibility: hidden;
+  user-select: none;
+  cursor: auto;
 }
 
 .game__field {
