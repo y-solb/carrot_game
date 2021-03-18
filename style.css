@@ -76,11 +76,11 @@ body {
 
 .pop-up {
   margin: auto;
-  width: 360px;
-  height: 180px;
-  background-color: rgba(52, 48, 48, 0.5);
+  width: 400px;
+  height: 200px;
+  background-color: rgba(52, 48, 48, 0.639);
   border-radius: 8px;
-  transform: translateY(-150%);
+  transform: translateY(60%);
 }
 
 .pop-up__hide {
@@ -88,7 +88,7 @@ body {
 }
 
 .replay__btn {
-  margin-top: 18px;
+  margin-top: 30px;
 }
 
 .message__box {
