@@ -10,7 +10,10 @@ const fieldRect = field.getBoundingClientRect();
 const gameBtn = document.querySelector('.game__btn');
 const timeBox = document.querySelector('.time__box');
 const scoreBox = document.querySelector('.score__box');
+
 const popUp = document.querySelector('.pop-up');
+const popUpText = document.querySelector('.message__box');
+const replayBtn = document.querySelector('.replay__btn');
 
 let started = false;
 let score = 0;
@@ -22,62 +25,35 @@ gameBtn.addEventListener('click', () => {
   } else {
     startGame();
   }
-  started = !started;
+});
+
+field.addEventListener('click', onFieldClick);
+
+replayBtn.addEventListener('click', () => {
+  startGame();
+  hidePopUp();
   console.log(started);
 });
 
 function startGame() {
+  started = true;
   initGame();
   showStopBtn();
   showTimerAndScore();
   startTimer();
 }
 
-function startTimer() {
-  let remainingTimeSec = GAME_DURATION_SEC;
-  updateTimerText(remainingTimeSec);
-  timer = setInterval(() => {
-    if (remainingTimeSec <= 0) {
-      clearInterval(timer);
-      return;
-    }
-    updateTimerText(--remainingTimeSec);
-  }, 1000);
-}
-
-function updateTimerText(time) {
-  const minutes = Math.floor(time / 60);
-  const seconds = time % 60;
-  timeBox.innerText = `${minutes}:${seconds}`;
-}
-
 function stopGame() {
+  started = false;
   stopTimer();
   hideGameBtn();
-  showPopup();
+  showPopup('REPLAY?');
 }
 
-function stopTimer() {
-  clearInterval(timer);
-}
-
-function hideGameBtn() {
-  gameBtn.style.visibility = 'hidden';
-}
-
-function showPopup() {
-  popUp.classList.remove('pop-up__hide');
-}
-
-function showStopBtn() {
-  const icon = gameBtn.querySelector('.fa-play');
-  icon.classList.add('fa-stop');
-  icon.classList.remove('fa-play');
-}
-
-function showTimerAndScore() {
-  timeBox.style.visibility = 'visible';
-  scoreBox.style.visibility = 'visible';
+function finishGame(result) {
+  started = false;
+  hideGameBtn();
+  showPopup(result ? 'YOU WIN!' : 'YOU LOST ㅠㅠ');
 }
 
 function initGame() {
@@ -108,4 +84,73 @@ function addItems(className, count, imgPath) {
 
 function randomNumber(min, max) {
   return Math.random() * (max - min) + min;
+}
+
+function showStopBtn() {
+  const icon = gameBtn.querySelector('.fas');
+  icon.classList.add('fa-stop');
+  icon.classList.remove('fa-play');
+}
+
+function showTimerAndScore() {
+  timeBox.style.visibility = 'visible';
+  scoreBox.style.visibility = 'visible';
+}
+
+function startTimer() {
+  let remainingTimeSec = GAME_DURATION_SEC;
+  updateTimerText(remainingTimeSec);
+  timer = setInterval(() => {
+    if (remainingTimeSec <= 0) {
+      clearInterval(timer);
+      finishGame(CARROT_COUNT === score);
+      return;
+    }
+    updateTimerText(--remainingTimeSec);
+  }, 1000);
+}
+
+function updateTimerText(time) {
+  const minutes = Math.floor(time / 60);
+  const seconds = time % 60;
+  timeBox.innerText = `${minutes}:${seconds}`;
+}
+
+function stopTimer() {
+  clearInterval(timer);
+}
+
+function hideGameBtn() {
+  gameBtn.style.visibility = 'hidden';
+}
+
+function showPopup(text) {
+  popUpText.innerText = text;
+  popUp.classList.remove('pop-up__hide');
+}
+
+function hidePopUp() {
+  popUp.classList.add('pop-up__hide');
+}
+
+function onFieldClick(e) {
+  if (!started) {
+    return;
+  }
+  const target = event.target;
+  if (target.matches('.carrot')) {
+    target.remove();
+    score++;
+    updateScoreBox();
+    if (score === CARROT_COUNT) {
+      finishGame(true);
+    }
+  } else if (target.matches('.bug')) {
+    stopTimer();
+    finishGame(false);
+  }
+}
+
+function updateScoreBox() {
+  scoreBox.innerText = CARROT_COUNT - score;
 }
