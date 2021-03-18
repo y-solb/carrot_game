@@ -97,3 +97,13 @@ body {
   font-weight: 600;
   padding: 8px;
 }
+
+.carrot,
+.bug {
+  transition: transform 100mx ease-in;
+}
+
+.carrot:hover,
+.bug:hover {
+  transform: scale(1.1);
+}
