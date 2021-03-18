@@ -67,11 +67,13 @@ function finishGame(result) {
   } else {
     playSound(bugSound);
   }
+  stopTimer();
   stopSound(bgSound);
   showPopup(result ? 'YOU WIN!' : 'YOU LOST ㅠㅠ');
 }
 
 function initGame() {
+  score = 0;
   field.innerHTML = '';
   scoreBox.innerText = CARROT_COUNT;
   addItems('carrot', 5, 'img/carrot.png');
@@ -162,7 +164,6 @@ function onFieldClick(e) {
       finishGame(true);
     }
   } else if (target.matches('.bug')) {
-    stopTimer();
     finishGame(false);
   }
 }
