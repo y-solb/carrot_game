@@ -15,6 +15,12 @@ const popUp = document.querySelector('.pop-up');
 const popUpText = document.querySelector('.message__box');
 const replayBtn = document.querySelector('.replay__btn');
 
+const carrotSound = new Audio('./sound/carrot_pull.mp3');
+const alertSound = new Audio('./sound/alert.wav');
+const bgSound = new Audio('./sound/bg.mp3');
+const bugSound = new Audio('./sound/bug_pull.mp3');
+const winSound = new Audio('./sound/game_win.mp3');
+
 let started = false;
 let score = 0;
 let timer = undefined;
@@ -41,6 +47,7 @@ function startGame() {
   showStopBtn();
   showTimerAndScore();
   startTimer();
+  playSound(bgSound);
 }
 
 function stopGame() {
@@ -48,11 +55,19 @@ function stopGame() {
   stopTimer();
   hideGameBtn();
   showPopup('REPLAY?');
+  playSound(alertSound);
+  stopSound(bgSound);
 }
 
 function finishGame(result) {
   started = false;
   hideGameBtn();
+  if (result) {
+    playSound(winSound);
+  } else {
+    playSound(bugSound);
+  }
+  stopSound(bgSound);
   showPopup(result ? 'YOU WIN!' : 'YOU LOST ㅠㅠ');
 }
 
@@ -141,6 +156,7 @@ function onFieldClick(e) {
   if (target.matches('.carrot')) {
     target.remove();
     score++;
+    playSound(carrotSound);
     updateScoreBox();
     if (score === CARROT_COUNT) {
       finishGame(true);
@@ -149,6 +165,15 @@ function onFieldClick(e) {
     stopTimer();
     finishGame(false);
   }
+}
+
+function playSound(sound) {
+  sound.currentTime = 0;
+  sound.play();
+}
+
+function stopSound(sound) {
+  sound.pause();
 }
 
 function updateScoreBox() {
