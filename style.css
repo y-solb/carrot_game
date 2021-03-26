@@ -8,7 +8,7 @@ html {
 }
 
 body {
-  background-image: url('img/background.png');
+  background-image: url("img/background.png");
   background-repeat: no-repeat;
   background-size: cover;
   text-align: center;
@@ -75,7 +75,7 @@ body {
   position: absolute;
   width: 100%;
   height: 40%;
-  margin-top: 200px;
+  margin-top: 360px;
 }
 
 .pop-up {
