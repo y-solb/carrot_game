@@ -74,8 +74,8 @@ function initGame() {
   score = 0;
   field.innerHTML = "";
   scoreBox.innerText = CARROT_COUNT;
-  addItems("carrot", 5, "img/carrot.png");
-  addItems("bug", 5, "img/bug.png");
+  addItems("carrot", CARROT_COUNT, "img/carrot.png");
+  addItems("bug", BUG_COUNT, "img/bug.png");
 }
 
 function addItems(className, count, imgPath) {
