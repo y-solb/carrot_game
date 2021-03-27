@@ -2,8 +2,8 @@
 
 import PopUp from "./popup.js";
 import Field from "./field.js";
+import * as sound from "./sound.js";
 
-const CARROT_SIZE = 80;
 const CARROT_COUNT = 5;
 const BUG_COUNT = 5;
 const GAME_DURATION_SEC = 5;
@@ -11,12 +11,6 @@ const GAME_DURATION_SEC = 5;
 const gameBtn = document.querySelector(".game__btn");
 const timeBox = document.querySelector(".time__box");
 const scoreBox = document.querySelector(".score__box");
-
-const carrotSound = new Audio("./sound/carrot_pull.mp3");
-const alertSound = new Audio("./sound/alert.wav");
-const bgSound = new Audio("./sound/bg.mp3");
-const bugSound = new Audio("./sound/bug_pull.mp3");
-const winSound = new Audio("./sound/game_win.mp3");
 
 let started = false;
 let score = 0;
@@ -36,12 +30,14 @@ function onItemClick(item) {
     return;
   }
   if (item === "carrot") {
+    console.log("carrot");
     score++;
     updateScoreBox();
     if (score === CARROT_COUNT) {
       finishGame(true);
     }
-  } else if (item === bug) {
+  } else if (item === "bug") {
+    console.log("bug");
     finishGame(false);
   }
 }
@@ -60,7 +56,7 @@ function startGame() {
   showStopBtn();
   showTimerAndScore();
   startTimer();
-  playSound(bgSound);
+  sound.playBackground();
 }
 
 function stopGame() {
@@ -68,20 +64,20 @@ function stopGame() {
   stopTimer();
   hideGameBtn();
   gameFinishBanner.showWithText("REPLAY?");
-  playSound(alertSound);
-  stopSound(bgSound);
+  sound.playAlert();
+  sound.stopBackground();
 }
 
 function finishGame(result) {
   started = false;
   hideGameBtn();
   if (result) {
-    playSound(winSound);
+    sound.playWin();
   } else {
-    playSound(bugSound);
+    sound.playBug();
   }
   stopTimer();
-  stopSound(bgSound);
+  sound.stopBackground();
   gameFinishBanner.showWithText(result ? "YOU WIN!" : "YOU LOST ㅠㅠ");
 }
 
@@ -128,15 +124,6 @@ function stopTimer() {
 
 function hideGameBtn() {
   gameBtn.style.visibility = "hidden";
-}
-
-function playSound(sound) {
-  sound.currentTime = 0;
-  sound.play();
-}
-
-function stopSound(sound) {
-  sound.pause();
 }
 
 function updateScoreBox() {
