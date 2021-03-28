@@ -24,11 +24,9 @@ export default class Field {
     if (target.matches(".carrot")) {
       target.remove();
       sound.playCarrot();
-      console.log("car이야rot");
-      this.onItemClick && onItemClick("carrot");
+      this.onItemClick && this.onItemClick("carrot");
     } else if (target.matches(".bug")) {
-      this.onItemClick && onItemClick("bug");
-      console.log("caㅇㅇㅇㅇ야rot");
+      this.onItemClick && this.onItemClick("bug");
     }
   };
 
