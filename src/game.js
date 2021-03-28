@@ -3,11 +3,34 @@
 import Field from "./field.js";
 import * as sound from "./sound.js";
 
-export default class Game {
-  constructor(carrotCount, bugCount, gameDuationSec) {
+// Builder Pattern
+export default class GameBuilder {
+  withCarrotCount(num) {
+    this.carrotCount = num;
+    return this;
+  }
+
+  withBugCount(num) {
+    this.bugCount = num;
+    return this;
+  }
+
+  withGameDuration(duration) {
+    this.gameDuration = duration;
+    return this;
+  }
+
+  build() {
+    console.log(this);
+    return new Game(this.carrotCount, this.bugCount, this.gameDuration);
+  }
+}
+
+class Game {
+  constructor(carrotCount, bugCount, gameDuration) {
     this.carrotCount = carrotCount;
     this.bugCount = bugCount;
-    this.gameDuationSec = gameDuationSec;
+    this.gameDuration = gameDuration;
 
     this.timeBox = document.querySelector(".time__box");
     this.scoreBox = document.querySelector(".score__box");
@@ -98,7 +121,7 @@ export default class Game {
   }
 
   startTimer() {
-    let remainingTimeSec = this.gameDuationSec;
+    let remainingTimeSec = this.gameDuration;
     this.updateTimerText(remainingTimeSec);
     this.timer = setInterval(() => {
       if (remainingTimeSec <= 0) {
