@@ -1,7 +1,8 @@
 "use strict";
 
 import PopUp from "./popup.js";
-import { GameBuilder } from "./game.js";
+import * as sound from "./sound.js";
+import { GameBuilder, Reason } from "./game.js";
 
 const gameFinishBanner = new PopUp();
 gameFinishBanner.setClickListener(() => {
@@ -13,14 +14,17 @@ const game = new GameBuilder().withCarrotCount(5).withBugCount(5).withGameDurati
 game.setGameStopListener((reason) => {
   let messgage;
   switch (reason) {
-    case "cancel":
+    case Reason.cancel:
       messgage = "REPLAY?";
+      sound.playAlert();
       break;
-    case "win":
+    case Reason.win:
       messgage = "WIN!!";
+      sound.playWin();
       break;
-    case "lose":
+    case Reason.lose:
       messgage = "YOU LOST ㅠㅠ";
+      sound.playBug();
       break;
     default:
       throw new Error("not valid reason");

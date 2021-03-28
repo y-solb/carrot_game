@@ -3,8 +3,14 @@
 import Field from "./field.js";
 import * as sound from "./sound.js";
 
+export const Reason = Object.freeze({
+  win: "win",
+  lose: "lose",
+  cancel: "cancel",
+});
+
 // Builder Pattern
-export default class GameBuilder {
+export class GameBuilder {
   withCarrotCount(num) {
     this.carrotCount = num;
     return this;
@@ -21,7 +27,6 @@ export default class GameBuilder {
   }
 
   build() {
-    console.log(this);
     return new Game(this.carrotCount, this.bugCount, this.gameDuration);
   }
 }
@@ -38,7 +43,7 @@ class Game {
 
     this.gameBtn.addEventListener("click", () => {
       if (this.started) {
-        this.stop();
+        this.stop(Reason.cancel);
       } else {
         this.start();
       }
@@ -65,26 +70,13 @@ class Game {
     sound.playBackground();
   }
 
-  stop() {
+  stop(reason) {
     this.started = false;
     this.stopTimer();
     this.hideGameBtn();
     sound.playAlert();
     sound.stopBackground();
-    this.onGameStop && this.onGameStop("cancel");
-  }
-
-  finish(result) {
-    this.started = false;
-    this.hideGameBtn();
-    if (result) {
-      sound.playWin();
-    } else {
-      sound.playBug();
-    }
-    this.stopTimer();
-    sound.stopBackground();
-    this.onGameStop && this.onGameStop(result ? "win" : "lose");
+    this.onGameStop && this.onGameStop(reason);
   }
 
   onItemClick = (item) => {
@@ -95,10 +87,10 @@ class Game {
       this.score++;
       this.updateScoreBox();
       if (this.score === this.carrotCount) {
-        this.finish(true);
+        this.stop(Reason.win);
       }
     } else if (item === "bug") {
-      this.finish(false);
+      this.stop(Reason.lose);
     }
   };
 
@@ -126,7 +118,7 @@ class Game {
     this.timer = setInterval(() => {
       if (remainingTimeSec <= 0) {
         clearInterval(this.timer);
-        this.finish(this.carrotCount === this.score);
+        this.stop(this.carrotCount === this.score ? Reason.win : Reason.lose);
         return;
       }
       this.updateTimerText(--remainingTimeSec);
