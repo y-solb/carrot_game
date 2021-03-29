@@ -23,6 +23,7 @@ body {
 }
 
 .box__border {
+  border: 4px solid black;
   border-radius: 8px;
   margin: 6px;
   background-color: whitesmoke;
@@ -33,7 +34,6 @@ body {
 .replay__btn {
   width: 80px;
   height: 80px;
-  border: 4px solid black;
   font-size: 34px;
   transition: transform 300ms ease-in;
   outline: none;
